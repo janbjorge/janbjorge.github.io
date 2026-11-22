@@ -1,13 +1,11 @@
 /* Color-scheme boot and toggle.
  *
  * Loaded synchronously from the <head> so data-theme lands on <html> before
- * first paint. The default follows the OS preference and tracks it live;
- * clicking a [data-theme-toggle] button stores an override in localStorage,
- * and that override wins on every later visit.
+ * first paint. The default is light. Clicking a [data-theme-toggle] button
+ * stores an override in localStorage, and that override wins on every later
+ * visit.
  */
 (function () {
-  var media = window.matchMedia("(prefers-color-scheme: dark)");
-
   function stored() {
     try {
       var v = localStorage.getItem("theme");
@@ -18,16 +16,12 @@
   }
 
   function apply() {
-    var theme = stored() || (media.matches ? "dark" : "light");
+    var theme = stored() || "light";
     document.documentElement.setAttribute("data-theme", theme);
     return theme;
   }
 
   apply();
-
-  media.addEventListener("change", function () {
-    if (!stored()) apply();
-  });
 
   document.addEventListener("click", function (ev) {
     var btn = ev.target.closest("[data-theme-toggle]");
@@ -38,7 +32,7 @@
       localStorage.setItem("theme", next);
     } catch (e) {
       /* Storage blocked (private mode): the flip above still holds for this
-       * page; the next load falls back to the OS preference. */
+       * page; the next load is light again. */
     }
   });
 })();

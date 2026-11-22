@@ -24,8 +24,8 @@
 }
 
 /* Linear's dark theme. theme.js sets data-theme on <html> before first paint:
- * the OS preference by default, a localStorage override once the reader has
- * clicked the toggle. Only surfaces change; the accent is shared. */
+ * light by default, dark once the reader has clicked the toggle and the
+ * choice is in localStorage. Only surfaces change; the accent is shared. */
 [data-theme="dark"] {
   color-scheme: dark;
 
