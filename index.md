@@ -3,11 +3,7 @@ layout: default
 title: Blog
 ---
 
-<section class="page-hero">
-  <span class="eyebrow">Blog</span>
-  <h1>{{ site.title }}</h1>
-  <p class="lede">{{ site.description }}</p>
-</section>
+{% include hero.html %}
 
 <section class="page-section">
   <span class="eyebrow">Posts</span>
