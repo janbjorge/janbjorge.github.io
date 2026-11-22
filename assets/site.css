@@ -1,0 +1,311 @@
+/* Personal blog.
+ *
+ * Design tokens and hairline-grid conventions are copied from Stafett's site
+ * stylesheet: zero border-radius, no shadows, --ink for structural borders
+ * and --line for internal dividers, Inter with an 850 display weight.
+ */
+
+:root {
+  /* Linear's light theme: white surface, cool gray ink, indigo accent. */
+  --ink: #282a30;
+  --paper: #fff;
+  --muted: #6f6e77;
+  --line: #e9e8ea;
+  --signal: #7170ff;
+
+  --tint-faint: rgba(0, 0, 0, 0.02);
+  --tint-soft: rgba(0, 0, 0, 0.03);
+  --tint-strong: rgba(0, 0, 0, 0.04);
+
+  --font-sans: Inter, "Inter var", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+}
+
+/* Linear's dark theme. theme.js sets data-theme on <html> before first paint:
+ * the OS preference by default, a localStorage override once the reader has
+ * clicked the toggle. Only surfaces change; the accent is shared. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink: #f7f8f8;
+  --paper: #08090a;
+  --muted: #8a8f98;
+  --line: #23252a;
+
+  --tint-faint: rgba(255, 255, 255, 0.03);
+  --tint-soft: rgba(255, 255, 255, 0.04);
+  --tint-strong: rgba(255, 255, 255, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  /* Reserve the scrollbar's width on every page so navigation between a
+   * short page and a long one does not shift the layout sideways. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------- primitives */
+
+.eyebrow {
+  font: 600 0.68rem/1 var(--font-sans);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.btn {
+  font: 600 12px/1 var(--font-sans);
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn.small {
+  font-size: 11px;
+  padding: 6px 10px;
+}
+
+.btn:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 1px;
+}
+
+/* ------------------------------------------------------------------- header */
+
+.site-header {
+  min-height: 56px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  font: 850 1.15rem/1 var(--font-sans);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  font: 500 12px/1 var(--font-sans);
+}
+
+.site-nav a:not(.btn) {
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav a:not(.btn):hover {
+  text-decoration: underline;
+}
+
+/* The toggle's glyph is painted here so no script rewrites button text. */
+.theme-icon::after {
+  content: "◐";
+}
+
+/* -------------------------------------------------------------------- page */
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 72px 24px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page h1 {
+  margin: 0;
+  font: 850 clamp(2.4rem, 6vw, 3.6rem) / 0.95 var(--font-sans);
+  letter-spacing: -0.045em;
+}
+
+.page-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.lede {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Each section is opened by a rule in --ink, which carries the page's
+ * rhythm, so a section needs no border of its own. */
+.page-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid var(--ink);
+  padding-top: 28px;
+  margin-top: 12px;
+}
+
+/* -------------------------------------------------------------- post list */
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+
+.post-list li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.post-title {
+  font: 850 1.35rem/1.1 var(--font-sans);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.post-title:hover {
+  text-decoration: underline;
+}
+
+.post-excerpt {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* -------------------------------------------------------------------- prose */
+
+.prose {
+  max-width: 72ch;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.prose p {
+  margin: 0 0 1.2em;
+}
+
+.prose h2,
+.prose h3 {
+  letter-spacing: -0.02em;
+  margin: 1.8em 0 0.5em;
+}
+
+.prose a {
+  color: var(--ink);
+}
+
+.prose pre {
+  border: 1px solid var(--line);
+  background: var(--tint-faint);
+  padding: 14px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--tint-strong);
+  padding: 0.1em 0.3em;
+}
+
+.prose pre code {
+  font-size: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------- footer */
+
+.page-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.page-foot a {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .site-nav {
+    justify-content: flex-start;
+  }
+
+  .page {
+    padding: 48px 20px 64px;
+  }
+}

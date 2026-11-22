@@ -3,16 +3,21 @@ layout: default
 title: Blog
 ---
 
-# janbjorge
+<section class="page-hero">
+  <span class="eyebrow">Blog</span>
+  <h1>{{ site.title }}</h1>
+  <p class="lede">{{ site.description }}</p>
+</section>
 
-Notes on software, databases and things I am building.
-
-## Posts
-
-{% for post in site.posts %}
-<article class="post-summary">
-  <p class="post-date">{{ post.date | date: "%B %-d, %Y" }}</p>
-  <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-  <p>{{ post.excerpt | strip_html | strip_newlines }}</p>
-</article>
-{% endfor %}
+<section class="page-section">
+  <span class="eyebrow">Posts</span>
+  <ul class="post-list">
+  {% for post in site.posts %}
+    <li>
+      <span class="eyebrow">{{ post.date | date: "%B %-d, %Y" }}</span>
+      <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <p class="post-excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 160 }}</p>
+    </li>
+  {% endfor %}
+  </ul>
+</section>

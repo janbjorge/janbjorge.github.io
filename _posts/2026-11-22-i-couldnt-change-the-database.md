@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: I couldn't change the database
 date: 2026-11-22
 ---
