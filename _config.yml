@@ -1,0 +1,5 @@
+title: janbjorge
+description: Notes on software, databases and things I am building.
+url: https://janbjorge.github.io
+markdown: kramdown
+permalink: /posts/:title/
